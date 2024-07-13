@@ -1,5 +1,14 @@
+# nodejs / workspaces
 node_modules/
-
 /packages/*/dist/
 
+# direnv
 /.direnv
+
+# project secrets
+.env
+
+# terraform
+/infrastructure/*/config/*.hcl
+!/infrastructure/*/config/*.hcl.example
+infrastructure/torin-reine/.terraform.lock.hcl

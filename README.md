@@ -38,3 +38,35 @@ This template provides recommendations and settings for the [Nix Env Selector ex
 ### OpenTofu
 
 A free and open source fork of Terraform. This is used for defining and maintaining infrastructure as code.
+
+### OpenTofu
+
+A free and open source fork of Terraform. This is used for defining and maintaining various infrastructure for the application. This includes aspects of the stack such as Cloudflare DNS and Neon databases.
+
+## Services
+
+Everything lives under `packages/` for now. This supports a basic monorepo structure where individual npm packages can exist through the project with Yarn's workspaces support.
+
+## Infrastructure
+
+You can get started with the OpenTofu stack with the shared S3 state in Cloudflare R2.
+
+> ⚠️ Make sure you're inside the `infrastructure/${project}` directory for all the commands, e.g. `infrastructure/torin-reine`
+
+Initialize the project:
+
+```sh
+tofu init -backend-config=config/backend.hcl
+```
+
+Plan the project:
+
+```sh
+tofu plan
+```
+
+Apply the project:
+
+```sh
+tofu apply
+```
