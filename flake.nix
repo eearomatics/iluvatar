@@ -21,6 +21,12 @@
 
                 # Infrastructure-as-Code tools
                 opentofu
+                cf-terraforming
+
+                (pkgs.writeShellScriptBin
+                  "cftofu"
+                  "cf-terraforming generate --provider-registry-hostname registry.opentofu.org --terraform-binary-path $(which tofu) $@"
+                )
             ];
 
             PROJECT_NAME = "Mercantile";
