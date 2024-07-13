@@ -11,4 +11,5 @@ node_modules/
 # terraform
 /infrastructure/*/config/*.hcl
 !/infrastructure/*/config/*.hcl.example
-infrastructure/torin-reine/.terraform.lock.hcl
+infrastructure/*/.terraform.lock.hcl
+infrastructure/*/.terraform/

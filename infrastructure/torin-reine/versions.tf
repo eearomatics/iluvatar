@@ -6,5 +6,7 @@ terraform {
     }
   }
 
-  backend "s3" {}
+  backend "s3" {
+    # sourced from config/backend.hcl
+  }
 }
