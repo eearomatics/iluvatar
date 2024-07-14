@@ -1,3 +1,5 @@
+[![Website Badge](https://img.shields.io/badge/Website-eearomatics.com-white?style=for-the-badge&logo=square&logoColor=%23ffffff&labelColor=%23bebba8)](https://www.eearomatics.com)
+
 # Ilúvatar
 
 > Eru Ilúvatar, the supreme, delegated the shaping of the world
