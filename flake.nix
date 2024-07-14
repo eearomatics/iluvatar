@@ -1,5 +1,5 @@
 {
-  description = "EE/Mercantile";
+  description = "eearomatics/iluvatar";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -18,6 +18,7 @@
                 # NodeJS development
                 nodejs_18
                 yarn
+                prisma-engines # Prisma ORM
 
                 # Infrastructure-as-Code tools
                 opentofu
@@ -29,7 +30,7 @@
                 )
             ];
 
-            PROJECT_NAME = "Mercantile";
+            PROJECT_NAME = "iluvatar";
 
             env = {
               PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
