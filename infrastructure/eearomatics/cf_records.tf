@@ -1,4 +1,4 @@
-resource "cloudflare_record" "terraform_managed_resource_8363ec813e052054c2a3018be791d96b" {
+resource "cloudflare_record" "b2b_catalog_canva_site_hosting_ip" {
   comment = "Canva site hosting for B2B Catalog"
   name    = "catalog"
   proxied = false

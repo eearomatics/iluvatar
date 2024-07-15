@@ -1,4 +1,4 @@
-resource "cloudflare_ruleset" "terraform_managed_resource_e49c9fbe9f4547468d2132ea7881c23a" {
+resource "cloudflare_ruleset" "ruleset_resource_caching" {
   kind    = "zone"
   name    = "default"
   phase   = "http_request_cache_settings"
