@@ -52,7 +52,7 @@ Everything lives under `packages/` for now. This supports a basic monorepo struc
 
 You can get started with the OpenTofu stack with the shared S3 state in Cloudflare R2.
 
-> ⚠️ Make sure you're inside the `infrastructure/${project}` directory for all the commands, e.g. `infrastructure/torin-reine`
+> ⚠️ Make sure you're inside the `infrastructure/${project}` directory for all the commands, e.g. `infrastructure/torinreine`
 
 Initialize the project:
 
