@@ -26,11 +26,24 @@
 
                 (pkgs.writeShellScriptBin
                   "cftofu"
-                  "cf-terraforming generate --provider-registry-hostname registry.opentofu.org --terraform-binary-path $(which tofu) $@"
+                  "cf-terraforming --terraform-binary-path ${pkgs.opentofu}/bin/tofu -t $TF_VAR_r2_api_token $@"
+                )
+
+                (pkgs.writeShellScriptBin
+                  "tofu-mv"
+                  "tofu state mv $1.$2 $1.$3"
+                )
+
+                (pkgs.writeShellScriptBin
+                  "cftofu-import"
+                  "cftofu import $@ | sed 's/terraform/tofu/' | $SHELL"
                 )
             ];
 
             PROJECT_NAME = "iluvatar";
+            CLOUDFLARE_PROVIDER_REGISTRY_HOSTNAME="registry.opentofu.org";
+            CLOUDFLARE_TERRAFORM_BINARY_PATH="${pkgs.opentofu}/bin/tofu";
+            TERRAGRUNT_TFPATH= "${pkgs.opentofu}/bin/tofu";
 
             env = {
               PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
