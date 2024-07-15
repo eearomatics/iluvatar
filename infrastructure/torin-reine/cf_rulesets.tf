@@ -1,8 +1,8 @@
-resource "cloudflare_ruleset" "terraform_managed_resource_80a03542ad964826a65b0bfbbc5f23d2" {
+resource "cloudflare_ruleset" "full_site_redirect" {
   kind    = "zone"
   name    = "default"
   phase   = "http_request_dynamic_redirect"
-  zone_id = "6396e3ac4ad45f161fa18d65e55161d7"
+  zone_id  = "${data.cloudflare_zone.torin_reine.id}"
   rules {
     action = "redirect"
     action_parameters {
