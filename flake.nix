@@ -31,7 +31,10 @@
 
                 (pkgs.writeShellScriptBin
                   "tofu-mv"
-                  "tofu state mv $1.$2 $1.$3"
+                  ''
+                    tofu state mv $1.$2 $1.$3
+                    find . -type f -iname '*.tf' -exec sed -i "s/$2/$3/g" {} \;
+                  ''
                 )
 
                 (pkgs.writeShellScriptBin
