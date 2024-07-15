@@ -9,7 +9,7 @@ resource "cloudflare_record" "b2b_catalog_canva_site_hosting_ip" {
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_67e75313b096bcbfea143ec9d774b761" {
+resource "cloudflare_record" "square_site_root_record" {
   comment = "Square Online site setup"
   name    = "eearomatics.com"
   proxied = true
@@ -20,7 +20,7 @@ resource "cloudflare_record" "terraform_managed_resource_67e75313b096bcbfea143ec
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_8e25f9cb39d722b8e939b17585be9bb4" {
+resource "cloudflare_record" "b2b_catalog_canva_site_hosting_www_ip" {
   comment = "Canva site hosting for B2B Catalog"
   name    = "www.catalog"
   proxied = false
@@ -31,7 +31,7 @@ resource "cloudflare_record" "terraform_managed_resource_8e25f9cb39d722b8e939b17
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_5bdd1de23d3455cef1bc015fb18774c4" {
+resource "cloudflare_record" "square_site_www_record" {
   comment = "Square Online site setup"
   name    = "www"
   proxied = true
@@ -42,7 +42,7 @@ resource "cloudflare_record" "terraform_managed_resource_5bdd1de23d3455cef1bc015
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_af79169d16dccb14f8ad9d0d784e0c38" {
+resource "cloudflare_record" "zoho_bookings_cname" {
   comment = "Zoho Bookings for EE Aromatics"
   name    = "bookings"
   proxied = false
@@ -53,7 +53,7 @@ resource "cloudflare_record" "terraform_managed_resource_af79169d16dccb14f8ad9d0
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_428642c33d71314703924433906df35b" {
+resource "cloudflare_record" "zoho_sites_cname" {
   name    = "dks6yc501"
   proxied = false
   ttl     = 1
@@ -62,7 +62,7 @@ resource "cloudflare_record" "terraform_managed_resource_428642c33d7131470392443
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_5b8d06124fd6636885db9cffde6f2bbb" {
+resource "cloudflare_record" "old_zoho_sites_cname" {
   name    = "old"
   proxied = false
   ttl     = 1
@@ -71,7 +71,7 @@ resource "cloudflare_record" "terraform_managed_resource_5b8d06124fd6636885db9cf
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_f42d72416dfa0491a671cfde79cf4d09" {
+resource "cloudflare_record" "zoho_mail_mx_10" {
   comment  = "Zoho Mail Domain Mail Configuration"
   name     = "eearomatics.com"
   priority = 10
@@ -83,7 +83,7 @@ resource "cloudflare_record" "terraform_managed_resource_f42d72416dfa0491a671cfd
   zone_id  = "17fe7c2812b92f8c8d25f893728c18ee"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_0b62adf4cef63abe50b024d14ee0961c" {
+resource "cloudflare_record" "zoho_mail_mx_20" {
   comment  = "Zoho Mail Domain Mail Configuration"
   name     = "eearomatics.com"
   priority = 20
@@ -95,7 +95,7 @@ resource "cloudflare_record" "terraform_managed_resource_0b62adf4cef63abe50b024d
   zone_id  = "17fe7c2812b92f8c8d25f893728c18ee"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_675178eee68f015fe9d5c7e26bcd41bd" {
+resource "cloudflare_record" "zoho_mail_mx_50" {
   comment  = "Zoho Mail Domain Mail Configuration"
   name     = "eearomatics.com"
   priority = 50
@@ -107,7 +107,7 @@ resource "cloudflare_record" "terraform_managed_resource_675178eee68f015fe9d5c7e
   zone_id  = "17fe7c2812b92f8c8d25f893728c18ee"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_5ee4a796672cf0ec80ec31caf5fb2dec" {
+resource "cloudflare_record" "zoho_commerce_mail_dkim" {
   comment = "Zoho Commerce Email DKIM Verification"
   name    = "1522905413783._domainkey"
   proxied = false
@@ -118,7 +118,7 @@ resource "cloudflare_record" "terraform_managed_resource_5ee4a796672cf0ec80ec31c
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_c51fa2ed9ac8bd3ff558f35b8d48ff34" {
+resource "cloudflare_record" "zoho_campaigns_mail_dkim" {
   comment = "Zoho Campaigns Mail DKIM Verfication"
   name    = "71531._domainkey.notify"
   proxied = false
@@ -129,7 +129,7 @@ resource "cloudflare_record" "terraform_managed_resource_c51fa2ed9ac8bd3ff558f35
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_2a39b8012eb510112cf433034a825269" {
+resource "cloudflare_record" "zoho_campaigns_mail_verification" {
   comment = "Zoho Campaigns Email Verifications"
   name    = "92033._domainkey"
   proxied = false
@@ -140,7 +140,7 @@ resource "cloudflare_record" "terraform_managed_resource_2a39b8012eb510112cf4330
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_2574e23bb5ae39084c3f701144931354" {
+resource "cloudflare_record" "canva_site_hosting_verification" {
   comment = "Canva site hosting for B2B Catalog"
   name    = "_canva-domain-verify.catalog"
   proxied = false
@@ -151,7 +151,7 @@ resource "cloudflare_record" "terraform_managed_resource_2574e23bb5ae39084c3f701
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_2e8bd6e41a19158b43380a88463c649a" {
+resource "cloudflare_record" "zoho_mail_dmarc" {
   comment = "DMARC configuration for Zoho"
   name    = "_dmarc"
   proxied = false
@@ -162,7 +162,7 @@ resource "cloudflare_record" "terraform_managed_resource_2e8bd6e41a19158b43380a8
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_0ae7a6e39788cd28e83c6974815ef344" {
+resource "cloudflare_record" "zoho_mail_dmarc_cf" {
   name    = "_dmarc"
   proxied = false
   tags    = ["email", "security"]
@@ -172,7 +172,7 @@ resource "cloudflare_record" "terraform_managed_resource_0ae7a6e39788cd28e83c697
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_462c0aae4abcb67959853b95bbfd5f27" {
+resource "cloudflare_record" "mail_spf" {
   comment = "Zoho Mail, Campaigns, and other Zoho product Email Verifications"
   name    = "eearomatics.com"
   proxied = false
@@ -183,7 +183,7 @@ resource "cloudflare_record" "terraform_managed_resource_462c0aae4abcb67959853b9
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_3ac0401349f4bdb8a13b33455c5cb718" {
+resource "cloudflare_record" "facebook_verification" {
   comment = "Facebook domain verification"
   name    = "eearomatics.com"
   proxied = false
@@ -194,7 +194,7 @@ resource "cloudflare_record" "terraform_managed_resource_3ac0401349f4bdb8a13b334
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_bac09c5802dc463c6cfb7344995b3ae7" {
+resource "cloudflare_record" "zoho_bookings_verification" {
   comment = "Zoho Bookings for EE Aromatics"
   name    = "eearomatics.com"
   proxied = false
@@ -205,7 +205,7 @@ resource "cloudflare_record" "terraform_managed_resource_bac09c5802dc463c6cfb734
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_df02dcd731c9487e37d790217e966993" {
+resource "cloudflare_record" "zoho_mail_verification" {
   comment = "Zoho Mail Domain Ownership Verification"
   name    = "eearomatics.com"
   proxied = false
@@ -216,7 +216,7 @@ resource "cloudflare_record" "terraform_managed_resource_df02dcd731c9487e37d7902
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_4e2215c246d4046583fc16d610167fcc" {
+resource "cloudflare_record" "google_search_console_verification" {
   comment = "Google Search Console Verification"
   name    = "eearomatics.com"
   proxied = false
@@ -227,7 +227,7 @@ resource "cloudflare_record" "terraform_managed_resource_4e2215c246d4046583fc16d
   zone_id = "${data.cloudflare_zone.eearomatics.id}"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_e095e992f43f001489a7e4d859268626" {
+resource "cloudflare_record" "zoho_mail_dkim" {
   comment = "Zoho Mail Domain Mail Configuration"
   name    = "zmail._domainkey"
   proxied = false
