@@ -13,7 +13,10 @@
           default = pkgs.mkShell {
             packages = with pkgs; [
                 # General dev tools
+                biome
+                deno
                 git
+                go-task
 
                 # NodeJS development
                 nodejs_18
@@ -23,6 +26,9 @@
                 # Infrastructure-as-Code tools
                 opentofu
                 cf-terraforming
+
+                # secrets management
+                age
 
                 (pkgs.writeShellScriptBin
                   "cftofu"

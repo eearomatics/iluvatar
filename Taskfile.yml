@@ -1,0 +1,44 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  TF_VAR_: Hello, World!
+
+tasks:
+  init:secrets:
+    dir: "scripts/"
+    cmds:
+      - onboard_secrets.sh
+
+  init:terragrunt:
+    dir: "infrastructure/"
+    cmds:
+      - terragrunt init
+  
+  validate:
+    dir: "infrastructure/"
+    cmds:
+      - terragrunt validate
+
+  upgrade-providers:
+    dir: "infrastructure/"
+    cmds:
+      - terragrunt init -upgrade
+      - terragrunt providers lock -platform=darwin_amd64 -platform=linux_amd64 -platform=darwin_arm64 -platform=linux_arm64
+
+  plan:
+    dir: "infrastructure/"
+    cmds:
+      - task: init
+      - terragrunt plan {{.CLI_ARGS}}
+
+  show:
+    dir: "infrastructure/"
+    cmds:
+      - terragrunt show {{.CLI_ARGS}}
+
+  apply:
+    dir: "infrastructure/"
+    cmds:
+      - terragrunt apply {{.CLI_ARGS}}
