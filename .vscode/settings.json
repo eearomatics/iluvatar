@@ -1,5 +1,10 @@
 {
 	"nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
-	"cSpell.words": ["deno", "terragrunt"],
-	"deno.enable": true
+	"cSpell.words": [
+		"deno",
+		"dotenv",
+		"terragrunt"
+	],
+	"deno.enable": true,
+	"editor.formatOnSave": false
 }

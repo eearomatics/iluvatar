@@ -25,6 +25,7 @@
 
                 # Infrastructure-as-Code tools
                 opentofu
+                terragrunt
                 cf-terraforming
 
                 # secrets management
@@ -49,12 +50,13 @@
                 )
             ];
 
-            PROJECT_NAME = "iluvatar";
-            CLOUDFLARE_PROVIDER_REGISTRY_HOSTNAME="registry.opentofu.org";
-            CLOUDFLARE_TERRAFORM_BINARY_PATH="${pkgs.opentofu}/bin/tofu";
-            TERRAGRUNT_TFPATH= "${pkgs.opentofu}/bin/tofu";
 
             env = {
+              PROJECT_NAME = "iluvatar";
+              CLOUDFLARE_PROVIDER_REGISTRY_HOSTNAME="registry.opentofu.org";
+              CLOUDFLARE_TERRAFORM_BINARY_PATH="${pkgs.opentofu}/bin/tofu";
+              TERRAGRUNT_TFPATH= "${pkgs.opentofu}/bin/tofu";
+
               PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
               PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
               PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
