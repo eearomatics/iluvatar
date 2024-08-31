@@ -3,7 +3,9 @@
 	"cSpell.words": [
 		"deno",
 		"dotenv",
-		"terragrunt"
+		"terragrunt",
+		"eearomatics",
+		"torinreine"
 	],
 	"deno.enable": true,
 	"editor.formatOnSave": false

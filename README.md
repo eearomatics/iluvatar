@@ -10,10 +10,18 @@ This project defines the foundations of various critical technologies at Etherea
 
 ## Tech
 
-- OpenTofu
-- Nix
+_*Sorted alphabetically_
+
+- Cloudflare
 - Direnv
+- GitHub Actions
+- GPG
+- Nix
 - NodeJS
+- OpenTofu
+- S3
+- SOPS
+- Taskfile
 - TypeScript
 - Yarn
 
@@ -52,12 +60,16 @@ Everything lives under `packages/` for now. This supports a basic monorepo struc
 
 You can get started with the OpenTofu stack with the shared S3 state in Cloudflare R2.
 
+There are two **major** requirements:
+
 > ⚠️ Make sure you're inside the `infrastructure/${project}` directory for all the commands, e.g. `infrastructure/torinreine`
 
-Initialize the project:
+> ⚠️ Make sure you have the necessary environment variables sourced to your shell from the `.env` file. This is **encrypted** by `sops`.
+
+Now, initialize the project:
 
 ```sh
-tofu init -backend-config=config/backend.hcl
+tofu init -backend-config=../backends/cloudflare-r2.conf
 ```
 
 Plan the project:
@@ -71,3 +83,19 @@ Apply the project:
 ```sh
 tofu apply
 ```
+
+## Tasks
+
+Common tasks are defined in the `Taskfile.yml` file. Read more on [Taskfile] to learn how to use and interact with it. This will require the `task` CLI.
+
+You can list all tasks with `task --list-all`.
+
+## Secrets
+
+Secrets are managed with [sops] and [gnupg]. You can edit existing sops files, granted you have sufficient access to, with `sops $filepath`. Older version of `sops` also had a command for this using `sops edit $filename`.
+
+<!-- Requirements -->
+
+[Taskfile]: https://taskfile.dev/usage
+[sops]: https://getsops.io/
+[gnupg]: https://gnupg.org/

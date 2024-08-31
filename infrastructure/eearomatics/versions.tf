@@ -7,6 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    # sourced from config/backend.hcl
+    bucket = "tofu-state"
+    key = "eearomatics.com/iac/prod"
   }
 }

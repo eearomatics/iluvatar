@@ -1,44 +1,98 @@
-# https://taskfile.dev
-
 version: '3'
 
-dotenv:
-  - .env
-
 tasks:
-  init:secrets:
-    dir: "scripts/"
+  init:
     cmds:
-      - onboard_secrets.sh
+      - task: ee:clean
+      - task: ee:init
+      - task: tr:clean
+      - task: tr:init
 
-  init:terragrunt:
-    dir: "infrastructure/"
+  tf:init:
+    desc: Common tf initialization task.
+    preconditions: &necessary-tf-envs
+      # - sh: 'test -d "{{.TF_PROJECT_DIR}}"'
+      #   msg: "Missing Terraform project directory var"
+      - sh: 'test -n "$TF_VAR_r2_api_token"'
+        msg: "Missing TF_VAR_r2_api_token in your environment"
+      - sh: 'test -n "$AWS_REGION"'
+        msg: "Missing AWS_REGION in your environment"
+      - sh: 'test -n "$AWS_ACCESS_KEY_ID"'
+        msg: "Missing AWS_ACCESS_KEY_ID in your environment"
+      - sh: 'test -n "$AWS_SECRET_ACCESS_KEY"'
+        msg: "Missing AWS_SECRET_ACCESS_KEY in your environment"
+      - sh: 'test -n "$AWS_ENDPOINT_URL_S3"'
+        msg: "Missing AWS_ENDPOINT_URL_S3 in your environment"
+    requires:
+      vars: [TF_PROJECT_DIR]
+    dir: '{{.TF_PROJECT_DIR}}'
     cmds:
-      - terragrunt init
-  
-  validate:
-    dir: "infrastructure/"
+      - tofu init -backend-config=../backends/cloudflare-r2.conf
+  tf:plan:
+    desc: Common tf plan task.
+    dir: '{{.TF_PROJECT_DIR}}'
+    preconditions: *necessary-tf-envs
     cmds:
-      - terragrunt validate
+      - tofu plan
+  tf:apply:
+    desc: Common tf apply task.
+    dir: '{{.TF_PROJECT_DIR}}'
+    preconditions: *necessary-tf-envs
+    cmds:
+      - tofu apply
+  tf:clean:
+    desc: Common tf project cleaning task.
+    dir: '{{.TF_PROJECT_DIR}}'
+    preconditions: *necessary-tf-envs
+    cmds:
+      - rm -rf ./.terraform .terraform.lock.hcl
 
-  upgrade-providers:
-    dir: "infrastructure/"
+  ee:init:
+    desc: Initialize the eearomatics.com Terraform module
     cmds:
-      - terragrunt init -upgrade
-      - terragrunt providers lock -platform=darwin_amd64 -platform=linux_amd64 -platform=darwin_arm64 -platform=linux_arm64
+      - task: tf:init
+        vars:
+          TF_PROJECT_DIR: infrastructure/eearomatics
+  ee:plan:
+    desc: Plan the eearomatics.com Terraform module
+    cmds:
+      - task: tf:plan
+        vars:
+          TF_PROJECT_DIR: infrastructure/eearomatics
+  ee:apply:
+    desc: Apply the eearomatics.com Terraform module
+    cmds:
+      - task: tf:apply
+        vars:
+          TF_PROJECT_DIR: infrastructure/eearomatics
+  ee:clean:
+    desc: Clean the eearomatics.com Terraform module
+    cmds:
+      - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/eearomatics
 
-  plan:
-    dir: "infrastructure/"
+  tr:init:
+    desc: Initialize the torinreine.com Terraform module
     cmds:
-      - task: init
-      - terragrunt plan {{.CLI_ARGS}}
-
-  show:
-    dir: "infrastructure/"
+      - task: tf:init
+        vars:
+          TF_PROJECT_DIR: infrastructure/torinreine
+  tr:plan:
+    desc: Plan the torinreine.com Terraform module
     cmds:
-      - terragrunt show {{.CLI_ARGS}}
-
-  apply:
-    dir: "infrastructure/"
+      - task: tf:plan
+        vars:
+          TF_PROJECT_DIR: infrastructure/torinreine
+  tr:apply:
+    desc: Apply the torinreine.com Terraform module
     cmds:
-      - terragrunt apply {{.CLI_ARGS}}
+      - task: tf:apply
+        vars:
+          TF_PROJECT_DIR: infrastructure/torinreine
+  tr:clean:
+    desc: Clean the torinreine.com Terraform module
+    cmds:
+      - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/torinreine

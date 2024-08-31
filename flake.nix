@@ -18,6 +18,10 @@
                 git
                 go-task
 
+                # Secrets management
+                gnupg
+                sops
+
                 # NodeJS development
                 nodejs_18
                 yarn
@@ -27,9 +31,6 @@
                 opentofu
                 terragrunt
                 cf-terraforming
-
-                # secrets management
-                age
 
                 (pkgs.writeShellScriptBin
                   "cftofu"
@@ -47,6 +48,11 @@
                 (pkgs.writeShellScriptBin
                   "cftofu-import"
                   "cftofu import $@ | sed 's/terraform/tofu/' | $SHELL"
+                )
+
+                (pkgs.writeShellScriptBin
+                  "decrypt-env-to-shell"
+                  "${pkgs.sops}/bin/sops -d .env > .env.dec"
                 )
             ];
 
@@ -67,6 +73,9 @@
                 echo
                 echo Prisma has been configured from Nixpkgs
                 echo
+                echo Decrypting environment to shell
+                echo
+                decrypt-env-to-shell
             '';
           };
         };
