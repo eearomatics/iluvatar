@@ -34,7 +34,7 @@
 
                 (pkgs.writeShellScriptBin
                   "cftofu"
-                  "cf-terraforming --terraform-binary-path ${pkgs.opentofu}/bin/tofu -t $TF_VAR_r2_api_token $@"
+                  "cf-terraforming --terraform-binary-path ${pkgs.opentofu}/bin/tofu -t $TF_VAR_cf_api_token $@"
                 )
 
                 (pkgs.writeShellScriptBin
