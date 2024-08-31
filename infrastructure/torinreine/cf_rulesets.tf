@@ -2,7 +2,7 @@ resource "cloudflare_ruleset" "full_site_redirect" {
   kind    = "zone"
   name    = "default"
   phase   = "http_request_dynamic_redirect"
-  zone_id  = "${data.cloudflare_zone.torin_reine.id}"
+  zone_id = data.cloudflare_zone.torin_reine.id
   rules {
     action = "redirect"
     action_parameters {

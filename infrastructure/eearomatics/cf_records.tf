@@ -6,7 +6,7 @@ resource "cloudflare_record" "b2b_catalog_canva_site_hosting_ip" {
   ttl     = 1
   type    = "A"
   content = "103.169.142.0"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "square_site_root_record" {
@@ -16,8 +16,8 @@ resource "cloudflare_record" "square_site_root_record" {
   tags    = ["ecommerce", "square"]
   ttl     = 1
   type    = "A"
-  content   = "199.34.228.164"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "199.34.228.164"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "b2b_catalog_canva_site_hosting_www_ip" {
@@ -27,8 +27,8 @@ resource "cloudflare_record" "b2b_catalog_canva_site_hosting_www_ip" {
   tags    = ["canva"]
   ttl     = 1
   type    = "A"
-  content   = "103.169.142.0"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "103.169.142.0"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "square_site_www_record" {
@@ -38,8 +38,8 @@ resource "cloudflare_record" "square_site_www_record" {
   tags    = ["ecommerce", "square"]
   ttl     = 1
   type    = "A"
-  content   = "199.34.228.164"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "199.34.228.164"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_bookings_cname" {
@@ -49,8 +49,8 @@ resource "cloudflare_record" "zoho_bookings_cname" {
   tags    = ["bookings", "zoho"]
   ttl     = 1
   type    = "CNAME"
-  content   = "bookings.cs.zohohost.com"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "bookings.cs.zohohost.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_sites_cname" {
@@ -58,8 +58,8 @@ resource "cloudflare_record" "zoho_sites_cname" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  content   = "zhs.zohosites.com"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "zhs.zohosites.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "old_zoho_sites_cname" {
@@ -67,8 +67,8 @@ resource "cloudflare_record" "old_zoho_sites_cname" {
   proxied = false
   ttl     = 1
   type    = "CNAME"
-  content   = "zhs.zohosites.com"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "zhs.zohosites.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_mx_10" {
@@ -80,7 +80,7 @@ resource "cloudflare_record" "zoho_mail_mx_10" {
   ttl      = 1
   type     = "MX"
   content  = "mx.zoho.com"
-  zone_id  = "${data.cloudflare_zone.eearomatics.id}"
+  zone_id  = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_mx_20" {
@@ -92,7 +92,7 @@ resource "cloudflare_record" "zoho_mail_mx_20" {
   ttl      = 1
   type     = "MX"
   content  = "mx2.zoho.com"
-  zone_id  = "${data.cloudflare_zone.eearomatics.id}"
+  zone_id  = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_mx_50" {
@@ -104,7 +104,7 @@ resource "cloudflare_record" "zoho_mail_mx_50" {
   ttl      = 1
   type     = "MX"
   content  = "mx3.zoho.com"
-  zone_id  = "${data.cloudflare_zone.eearomatics.id}"
+  zone_id  = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_commerce_mail_dkim" {
@@ -114,8 +114,8 @@ resource "cloudflare_record" "zoho_commerce_mail_dkim" {
   tags    = ["commerce", "email", "security", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCr6KMgdxxgg7oT3ulMwPJs9RXgXDrI9UWU118pHEMohl3UbL3Jwp4oxp/9N3thh/3WCJnYV134zbEVolZwqaT3JsFEq/mQ/RpW/JnOZ3rnxqJPurb2bcfJol4SDxiWVObzHX31xnANzFcXnq1/5dMK5QvW4Jh7n0fm4+4ywqiy2QIDAQAB"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCr6KMgdxxgg7oT3ulMwPJs9RXgXDrI9UWU118pHEMohl3UbL3Jwp4oxp/9N3thh/3WCJnYV134zbEVolZwqaT3JsFEq/mQ/RpW/JnOZ3rnxqJPurb2bcfJol4SDxiWVObzHX31xnANzFcXnq1/5dMK5QvW4Jh7n0fm4+4ywqiy2QIDAQAB"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_campaigns_mail_dkim" {
@@ -125,8 +125,8 @@ resource "cloudflare_record" "zoho_campaigns_mail_dkim" {
   tags    = ["campaigns", "email", "security", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCywSAcPezHGzylfC9VM6/Oz+WnnDEXyvMS1LeOu28j6jJdLgOu7bUtxRjv+jlrNh7mWWC3aNtSlUT8ySTPYozQszBRebl1u8oOomMCWQEPApLusTW0jhF1o49+lcDJyBIM21vOssC6o3azSWS2rOt6eTl5MRlX628kAnk7D8IlCwIDAQAB"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCywSAcPezHGzylfC9VM6/Oz+WnnDEXyvMS1LeOu28j6jJdLgOu7bUtxRjv+jlrNh7mWWC3aNtSlUT8ySTPYozQszBRebl1u8oOomMCWQEPApLusTW0jhF1o49+lcDJyBIM21vOssC6o3azSWS2rOt6eTl5MRlX628kAnk7D8IlCwIDAQAB"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_campaigns_mail_verification" {
@@ -136,8 +136,8 @@ resource "cloudflare_record" "zoho_campaigns_mail_verification" {
   tags    = ["campaigns", "email", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDUJZB81LUEuics5y1yXBv1afJ5KyLebBLeqQW8docEMn+N21hmMqm0XJwimJnvADOVOH81isNERv+jgMS2HMxXud6mFUvzFqATl/ophXXPB65DL2aZkhcTtVk2PpDPqM/s81PsS7epcVYQ5GS+ez+YladTkb8wSrD2OZYunGrRwIDAQAB"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDUJZB81LUEuics5y1yXBv1afJ5KyLebBLeqQW8docEMn+N21hmMqm0XJwimJnvADOVOH81isNERv+jgMS2HMxXud6mFUvzFqATl/ophXXPB65DL2aZkhcTtVk2PpDPqM/s81PsS7epcVYQ5GS+ez+YladTkb8wSrD2OZYunGrRwIDAQAB"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "canva_site_hosting_verification" {
@@ -147,8 +147,8 @@ resource "cloudflare_record" "canva_site_hosting_verification" {
   tags    = ["canva"]
   ttl     = 1
   type    = "TXT"
-  content   = "01217662-a2ce-438c-a514-2d6663cf78e6"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "01217662-a2ce-438c-a514-2d6663cf78e6"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_dmarc" {
@@ -158,8 +158,8 @@ resource "cloudflare_record" "zoho_mail_dmarc" {
   tags    = ["email", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "v=DMARC1; p=none; rua=mailto:dmarc@eearomatics.com; ruf=mailto:dmarc@eearomatics.com; sp=none; adkim=r; aspf=r"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "v=DMARC1; p=none; rua=mailto:dmarc@eearomatics.com; ruf=mailto:dmarc@eearomatics.com; sp=none; adkim=r; aspf=r"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_dmarc_cf" {
@@ -168,8 +168,8 @@ resource "cloudflare_record" "zoho_mail_dmarc_cf" {
   tags    = ["email", "security"]
   ttl     = 1
   type    = "TXT"
-  content   = "\"v=DMARC1;  p=none; rua=mailto:5c60591fd7504541ad88d76d9227e2dd@dmarc-reports.cloudflare.net\""
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "\"v=DMARC1;  p=none; rua=mailto:5c60591fd7504541ad88d76d9227e2dd@dmarc-reports.cloudflare.net\""
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "mail_spf" {
@@ -179,8 +179,8 @@ resource "cloudflare_record" "mail_spf" {
   tags    = ["campaigns", "email", "security", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "v=spf1 include:zcsend.net include:zohomail.com include:zoho.com ~all"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "v=spf1 include:zcsend.net include:zohomail.com include:zoho.com ~all"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "facebook_verification" {
@@ -190,8 +190,8 @@ resource "cloudflare_record" "facebook_verification" {
   tags    = ["facebook", "meta"]
   ttl     = 1
   type    = "TXT"
-  content   = "facebook-domain-verification=5go2l4ua44qa7evnmwd27s6xhqmg92"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "facebook-domain-verification=5go2l4ua44qa7evnmwd27s6xhqmg92"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_bookings_verification" {
@@ -201,8 +201,8 @@ resource "cloudflare_record" "zoho_bookings_verification" {
   tags    = ["bookings", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "hagjq5e.bookings.cs.zohohost.com"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "hagjq5e.bookings.cs.zohohost.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_verification" {
@@ -212,8 +212,8 @@ resource "cloudflare_record" "zoho_mail_verification" {
   tags    = ["email", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "zoho-verification=zb82557634.zmverify.zoho.com"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "zoho-verification=zb82557634.zmverify.zoho.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "google_search_console_verification" {
@@ -223,8 +223,8 @@ resource "cloudflare_record" "google_search_console_verification" {
   tags    = ["google"]
   ttl     = 1
   type    = "TXT"
-  content   = "google-site-verification=F6fVoJk8enue0heCvwHRNXhS8vBvl2CEcNoYuVpwM-A"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "google-site-verification=F6fVoJk8enue0heCvwHRNXhS8vBvl2CEcNoYuVpwM-A"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 
 resource "cloudflare_record" "zoho_mail_dkim" {
@@ -234,7 +234,7 @@ resource "cloudflare_record" "zoho_mail_dkim" {
   tags    = ["email", "zoho"]
   ttl     = 1
   type    = "TXT"
-  content   = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTiRTAkh552NfxL/Zev9H+TffEzifWvQTG/qWGvlgDxCGgYzlXnCmR2rWMy57ZYPwcdWk4RRG0d1LNEEE2WNVdr4jn+dREonGGKLe4IIriDq70XzwfOMqhTfChyLHLBbr9b2NE6oUa/JPYvDLYlEcM3teCHjrxoRvMmToeBNvKgwIDAQAB"
-  zone_id = "${data.cloudflare_zone.eearomatics.id}"
+  content = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTiRTAkh552NfxL/Zev9H+TffEzifWvQTG/qWGvlgDxCGgYzlXnCmR2rWMy57ZYPwcdWk4RRG0d1LNEEE2WNVdr4jn+dREonGGKLe4IIriDq70XzwfOMqhTfChyLHLBbr9b2NE6oUa/JPYvDLYlEcM3teCHjrxoRvMmToeBNvKgwIDAQAB"
+  zone_id = data.cloudflare_zone.eearomatics.id
 }
 

@@ -1,4 +1,4 @@
 variable "r2_api_token" {
-  type = string
+  type     = string
   nullable = false
 }
