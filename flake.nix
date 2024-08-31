@@ -71,10 +71,11 @@
                 echo Decrypting environment to shell
                 echo
 
-                pushd "$(${pkgs.git}/bin/git rev-parse --show-toplevel)"
-                ${pkgs.sops}/bin/sops -d .env > .env.dec
-                source .env.dec
-                popd
+                local rd="$(${pkgs.git}/bin/git rev-parse --show-toplevel)"
+                if [ ! -f "$rd/.env.dec" ] || [ "$rd/.env.dec" -ot "$rd/.env" ]; then
+                  ${pkgs.sops}/bin/sops -d $rd/.env > $rd/.env.dec
+                fi
+                source $rd/.env.dec
             '';
           };
         };
