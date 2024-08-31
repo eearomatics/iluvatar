@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v9
       - uses: DeterminateSystems/magic-nix-cache-action@v2
-      - run: nix-shell --run "echo -n $SOPS_GPG_KEY_B64E | base64 -d | gpg --import"
+      - run: echo -n $SOPS_GPG_KEY_B64E | base64 -d | gpg --import
       - run: nix-shell --run "task ${{ matrix.project }}:init"
       - run: nix-shell --run "task ${{ matrix.project }}:plan"
       # - run: nix-shell --run "task ${{ matrix.project }}:apply"
