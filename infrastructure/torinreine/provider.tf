@@ -1,3 +1,3 @@
 provider "cloudflare" {
-  api_token = var.r2_api_token
+  api_token = "${var.cf_api_token}"
 }
