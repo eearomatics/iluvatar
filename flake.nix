@@ -49,11 +49,6 @@
                   "cftofu-import"
                   "cftofu import $@ | sed 's/terraform/tofu/' | $SHELL"
                 )
-
-                (pkgs.writeShellScriptBin
-                  "decrypt-env-to-shell"
-                  "${pkgs.sops}/bin/sops -d .env > .env.dec"
-                )
             ];
 
 
@@ -75,7 +70,11 @@
                 echo
                 echo Decrypting environment to shell
                 echo
-                decrypt-env-to-shell
+
+                pushd "$(${pkgs.git}/bin/git rev-parse --show-toplevel)"
+                ${pkgs.sops}/bin/sops -d .env > .env.dec
+                source .env.dec
+                popd
             '';
           };
         };
