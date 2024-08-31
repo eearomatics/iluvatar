@@ -14,6 +14,8 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v9
       - uses: DeterminateSystems/magic-nix-cache-action@v2
       - run: echo -n $SOPS_GPG_KEY_B64E | base64 -d | gpg --import
+        env:
+          SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
       - run: nix-shell --run "task ${{ matrix.project }}:init"
       - run: nix-shell --run "task ${{ matrix.project }}:plan"
       # - run: nix-shell --run "task ${{ matrix.project }}:apply"
