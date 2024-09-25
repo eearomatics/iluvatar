@@ -46,6 +46,12 @@ tasks:
     preconditions: *necessary-tf-envs
     cmds:
       - rm -rf ./.terraform .terraform.lock.hcl
+  tf:run:
+    desc: Common tf project runner task.
+    dir: '{{.TF_PROJECT_DIR}}'
+    preconditions: *necessary-tf-envs
+    cmds:
+      - tofu {{.CLI_ARGS}}
 
   ee:init:
     desc: Initialize the eearomatics.com Terraform module
@@ -71,6 +77,12 @@ tasks:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
+  ee:run:
+    desc: Run a command in the eearomatics.com Terraform module
+    cmds:
+      - task: tf:run
+        vars:
+          TF_PROJECT_DIR: infrastructure/eearomatics
 
   tr:init:
     desc: Initialize the torinreine.com Terraform module
@@ -94,5 +106,11 @@ tasks:
     desc: Clean the torinreine.com Terraform module
     cmds:
       - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/torinreine
+  tr:run:
+    desc: Run a command in the torinreine.com Terraform module
+    cmds:
+      - task: tf:run
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine

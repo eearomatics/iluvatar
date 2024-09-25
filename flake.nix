@@ -34,13 +34,13 @@
 
                 (pkgs.writeShellScriptBin
                   "cftofu"
-                  "cf-terraforming --terraform-binary-path ${pkgs.opentofu}/bin/tofu -t $TF_VAR_cf_api_token $@"
+                  "cf-terraforming --terraform-binary-path ${pkgs.opentofu}/bin/tofu --provider-registry-hostname $CLOUDFLARE_PROVIDER_REGISTRY_HOSTNAME -t $TF_VAR_cf_api_token $@"
                 )
 
                 (pkgs.writeShellScriptBin
                   "tofu-mv"
                   ''
-                    tofu state mv $1.$2 $1.$3
+                    ${pkgs.opentofu}/bin/tofu state mv $1.$2 $1.$3
                     find . -type f -iname '*.tf' -exec sed -i "s/$2/$3/g" {} \;
                   ''
                 )

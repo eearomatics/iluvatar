@@ -8,6 +8,6 @@ terraform {
 
   backend "s3" {
     bucket = "tofu-state"
-    key    = "eearomatics.com/iac/prod"
+    key    = "eearomatics.com/iac/prod/tfstate"
   }
 }
