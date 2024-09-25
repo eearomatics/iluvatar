@@ -1,4 +1,4 @@
-resource "cloudflare_ruleset" "full_site_redirect" {
+resource "cloudflare_ruleset" "terraform_managed_resource_80a03542ad964826a65b0bfbbc5f23d2" {
   kind    = "zone"
   name    = "default"
   phase   = "http_request_dynamic_redirect"
