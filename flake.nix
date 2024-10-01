@@ -77,6 +77,8 @@
                   ${pkgs.sops}/bin/sops -d $rd/.env > $rd/.env.dec
                 fi
                 source $rd/.env.dec
+
+                gpg --keyserver hkp://keys.openpgp.org --refresh-keys it@eearomatics.com
             '';
           };
         };

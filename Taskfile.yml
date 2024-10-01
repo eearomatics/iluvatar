@@ -39,7 +39,7 @@ tasks:
     dir: '{{.TF_PROJECT_DIR}}'
     preconditions: *necessary-tf-envs
     cmds:
-      - tofu apply
+      - tofu apply {{.CLI_ARGS}}
   tf:clean:
     desc: Common tf project cleaning task.
     dir: '{{.TF_PROJECT_DIR}}'

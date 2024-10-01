@@ -1,9 +1,8 @@
-name: "Continuous Delivery"
+name: "Continuous Integration"
 on:
-  workflow_run:
-    workflows: ["Continuous Integration"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 jobs:
   terraform:
     strategy:
@@ -11,7 +10,6 @@ jobs:
         project:
           - ee
           - tr
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,4 +20,3 @@ jobs:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
       - run: nix-shell --run "task ${{ matrix.project }}:init"
       - run: nix-shell --run "task ${{ matrix.project }}:plan"
-      - run: nix-shell --run "task ${{ matrix.project }}:apply -- -auto-approve"
