@@ -21,6 +21,7 @@
                 # Secrets management
                 gnupg
                 sops
+                age
 
                 # NodeJS development
                 nodejs_18
