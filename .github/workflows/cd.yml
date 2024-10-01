@@ -22,5 +22,4 @@ jobs:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
       - run: nix-shell --run "task ${{ matrix.project }}:init"
       - run: nix-shell --run "task ${{ matrix.project }}:plan"
-      # - run: nix-shell --run "task ${{ matrix.project }}:apply -- -auto-approve"
-      - run: echo 'I would be deploying right now'
+      - run: nix-shell --run "task ${{ matrix.project }}:apply -- -auto-approve"
