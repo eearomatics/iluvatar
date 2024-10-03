@@ -10,6 +10,7 @@ jobs:
         project:
           - ee
           - tr
+          - cloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
