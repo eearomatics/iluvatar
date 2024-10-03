@@ -8,6 +8,10 @@ terraform {
       source = "terraform-community-providers/neon"
       version = "0.1.8"
     }
+    redpanda = {
+      source = "redpanda-data/redpanda"
+      version = "0.7.0"
+    }
   }
 
   backend "s3" {

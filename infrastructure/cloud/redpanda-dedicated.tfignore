@@ -1,0 +1,190 @@
+provider "redpanda" {
+  client_id      = var.redpanda_redpanda_client_id
+  client_secret  = var.redpanda_redpanda_client_secret
+}
+
+resource "redpanda_resource_group" "primary" {
+  name = var.redpanda_resource_group_name
+}
+
+resource "redpanda_network" "primary" {
+  name              = var.redpanda_network_name
+  resource_group_id = redpanda_resource_group.primary.id
+  cloud_provider    = var.redpanda_cloud_provider
+  region            = var.redpanda_region
+  cluster_type      = "dedicated"
+  cidr_block        = "10.0.0.0/20"
+}
+
+resource "redpanda_cluster" "primary" {
+  name              = var.redpanda_cluster_name
+  resource_group_id = redpanda_resource_group.primary.id
+  network_id        = redpanda_network.primary.id
+  cloud_provider    = var.redpanda_cloud_provider
+  region            = var.redpanda_region
+  cluster_type      = "dedicated"
+  connection_type   = "public"
+  throughput_tier   = var.redpanda_throughput_tier
+  zones             = var.redpanda_zones
+  allow_deletion    = true
+  tags = {
+    "key" = "value"
+  }
+  aws_private_link = {
+    enabled         = true
+    connect_console = true
+    allowed_principals = ["arn:aws:iam::123456789024:root"]
+  }
+}
+
+### BEGIN SECTION: primary
+resource "redpanda_user" "primary_admin" {
+  name            = "primary_admin"
+  password        = var.redpanda_primary_admin_user_pw
+  mechanism       = var.redpanda_mechanism
+  cluster_api_url = redpanda_cluster.primary.cluster_api_url
+}
+
+resource "redpanda_topic" "primary" {
+  name               = "primary"
+  partition_count    = var.redpanda_partition_count
+  replication_factor = var.redpanda_replication_factor
+  cluster_api_url    = redpanda_cluster.primary.cluster_api_url
+  allow_deletion     = true
+}
+
+resource "redpanda_acl" "primary_read" {
+  resource_type         = "TOPIC"
+  resource_name         = redpanda_topic.primary.name
+  resource_pattern_type = "LITERAL"
+  principal             = "User:${redpanda_user.primary.name}"
+  host                  = "*"
+  operation             = "READ"
+  permission_type       = "ALLOW"
+  cluster_api_url       = redpanda_cluster.primary.cluster_api_url
+}
+
+resource "redpanda_acl" "primary_write" {
+  resource_type         = "TOPIC"
+  resource_name         = redpanda_topic.primary.name
+  resource_pattern_type = "LITERAL"
+  principal             = "User:${redpanda_user.primary.name}"
+  host                  = "*"
+  operation             = "WRITE"
+  permission_type       = "ALLOW"
+  cluster_api_url       = redpanda_cluster.primary.cluster_api_url
+}
+
+resource "redpanda_acl" "primary_describe" {
+  resource_type         = "TOPIC"
+  resource_name         = redpanda_topic.primary.name
+  resource_pattern_type = "LITERAL"
+  principal             = "User:${redpanda_user.primary.name}"
+  host                  = "*"
+  operation             = "DESCRIBE"
+  permission_type       = "ALLOW"
+  cluster_api_url       = redpanda_cluster.primary.cluster_api_url
+}
+
+resource "redpanda_acl" "primary" {
+  resource_type         = "TOPIC"
+  resource_name         = redpanda_topic.primary.name
+  resource_pattern_type = "LITERAL"
+  principal             = "User:${redpanda_user.primary.name}"
+  host                  = "*"
+  operation             = "READ"
+  permission_type       = "ALLOW"
+  cluster_api_url       = redpanda_cluster.primary.cluster_api_url
+}
+### END SECTION: primary
+
+
+### BEGIN SECTION: square
+resource "redpanda_user" "square_admin" {
+  name            = "square_admin"
+  password        = var.redpanda_square_admin_user_pw
+  mechanism       = var.redpanda_mechanism
+  cluster_api_url = redpanda_cluster.primary.cluster_api_url
+}
+
+resource "redpanda_topic" "square" {
+  name               = "square-events"
+  partition_count    = var.redpanda_partition_count
+  replication_factor = var.redpanda_replication_factor
+  cluster_api_url    = redpanda_cluster.primary.cluster_api_url
+  allow_deletion     = true
+}
+### END SECTION: square
+
+
+### BEGIN SECTION: facebook
+resource "redpanda_topic" "facebook" {
+  name               = "facebook-events"
+  partition_count    = var.redpanda_partition_count
+  replication_factor = var.redpanda_replication_factor
+  cluster_api_url    = redpanda_cluster.primary.cluster_api_url
+  allow_deletion     = true
+}
+### END SECTION: facebook
+
+
+### BEGIN SECTION: instagram
+resource "redpanda_topic" "instagram" {
+  name               = "instagram-events"
+  partition_count    = var.redpanda_partition_count
+  replication_factor = var.redpanda_replication_factor
+  cluster_api_url    = redpanda_cluster.primary.cluster_api_url
+  allow_deletion     = true
+}
+### END SECTION: instagram
+
+
+### BEGIN SECTION: Variables
+variable "redpanda_resource_group_name" {
+  default = "primary"
+}
+
+variable "redpanda_network_name" {
+  default = "primary"
+}
+
+variable "redpanda_cluster_name" {
+  default = "primary"
+}
+
+variable "redpanda_region" {
+  default = "us-east-2"
+}
+
+variable "redpanda_zones" {
+  default = ["use2-az1", "use2-az2", "use2-az3"]
+}
+
+variable "redpanda_cloud_provider" {
+  default = "aws"
+}
+
+variable "redpanda_throughput_tier" {
+  default = "tier-1-aws-v2-arm"
+}
+
+variable "redpanda_user_name" {
+  default = "primary-username"
+}
+
+variable "redpanda_user_pw" {
+  default = var.redpanda_user_password
+}
+
+variable "redpanda_mechanism" {
+  default = "scram-sha-256"
+}
+
+variable "redpanda_partition_count" {
+  default = 1
+}
+
+variable "redpanda_replication_factor" {
+  default = 1
+}
+### END SECTION: Variables

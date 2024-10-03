@@ -1,0 +1,32 @@
+name = "backoffice-orders"
+compatibility_date = "2024-10-03"
+pages_build_output_dir = "./dist"
+compatibility_flags = [ "nodejs_compat" ]
+
+account_id = "${CF_ACCT_ID}"
+zone_id = "${CF_ZONE_ID_EEAROMATICS}"
+
+[env.production]
+route = "https://orders.backoffice.eearomatics.com/*"
+
+[env.sandbox]
+route = "https://orders.backoffice.sandbox.eearomatics.com/*"
+
+# [vars]
+# MY_VAR = "my-variable"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "my-database"
+# database_id = ""
+
+# [ai]
+# binding = "AI"

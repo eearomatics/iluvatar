@@ -7,9 +7,14 @@
 	"author": "",
 	"license": "MIT",
 	"private": true,
-	"workspaces": ["packages/*"],
+	"workspaces": [
+		"packages/*",
+		"workers/*"
+	],
 	"devDependencies": {
 		"@types/node": "^20.12.12",
-		"ts-node": "^10.9.2"
+		"create-cloudflare": "^2.29.1",
+		"ts-node": "^10.9.2",
+		"wrangler": "^3.79.0"
 	}
 }
