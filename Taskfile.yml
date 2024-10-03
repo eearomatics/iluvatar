@@ -114,3 +114,34 @@ tasks:
       - task: tf:run
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
+
+  cloud:init:
+    desc: Initialize the cloud Terraform module
+    cmds:
+      - task: tf:init
+        vars:
+          TF_PROJECT_DIR: infrastructure/cloud
+  cloud:plan:
+    desc: Plan the cloud Terraform module
+    cmds:
+      - task: tf:plan
+        vars:
+          TF_PROJECT_DIR: infrastructure/cloud
+  cloud:apply:
+    desc: Apply the cloud Terraform module
+    cmds:
+      - task: tf:apply
+        vars:
+          TF_PROJECT_DIR: infrastructure/cloud
+  cloud:clean:
+    desc: Clean the cloud Terraform module
+    cmds:
+      - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/cloud
+  cloud:run:
+    desc: Run a command in the cloud Terraform module
+    cmds:
+      - task: tf:run
+        vars:
+          TF_PROJECT_DIR: infrastructure/cloud
