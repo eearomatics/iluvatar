@@ -1,18 +1,10 @@
 version: '3'
 
 tasks:
-  init:
-    cmds:
-      - task: ee:clean
-      - task: ee:init
-      - task: tr:clean
-      - task: tr:init
-
+  ### BEGIN SECTION: Terraform shared utility tasks
   tf:init:
     desc: Common tf initialization task.
     preconditions: &necessary-tf-envs
-      # - sh: 'test -d "{{.TF_PROJECT_DIR}}"'
-      #   msg: "Missing Terraform project directory var"
       - sh: 'test -n "$TF_VAR_r2_api_token"'
         msg: "Missing TF_VAR_r2_api_token in your environment"
       - sh: 'test -n "$AWS_REGION"'
@@ -23,52 +15,55 @@ tasks:
         msg: "Missing AWS_SECRET_ACCESS_KEY in your environment"
       - sh: 'test -n "$AWS_ENDPOINT_URL_S3"'
         msg: "Missing AWS_ENDPOINT_URL_S3 in your environment"
-    requires:
+    requires: &necessary-tf-vars
       vars: [TF_PROJECT_DIR]
     dir: '{{.TF_PROJECT_DIR}}'
     cmds:
-      - tofu init -backend-config=../backends/cloudflare-r2.conf {{.CLI_ARGS}}
-  tf:plan:
-    desc: Common tf plan task.
-    dir: '{{.TF_PROJECT_DIR}}'
-    preconditions: *necessary-tf-envs
-    cmds:
-      - tofu plan {{.CLI_ARGS}}
-  tf:apply:
-    desc: Common tf apply task.
-    dir: '{{.TF_PROJECT_DIR}}'
-    preconditions: *necessary-tf-envs
-    cmds:
-      - tofu apply {{.CLI_ARGS}}
+      - tofu init -backend-config={{.ROOT_DIR}}/infrastructure/backends/cloudflare-r2.conf {{.CLI_ARGS}}
   tf:clean:
     desc: Common tf project cleaning task.
     dir: '{{.TF_PROJECT_DIR}}'
     preconditions: *necessary-tf-envs
+    requires: *necessary-tf-vars
     cmds:
       - rm -rf ./.terraform .terraform.lock.hcl
   tf:run:
     desc: Common tf project runner task.
     dir: '{{.TF_PROJECT_DIR}}'
     preconditions: *necessary-tf-envs
+    requires: *necessary-tf-vars
     cmds:
       - tofu {{.CLI_ARGS}}
+  tf:*:
+    desc: Common tf project runner task.
+    dir: '{{.TF_PROJECT_DIR}}'
+    preconditions: *necessary-tf-envs
+    requires: *necessary-tf-vars
+    vars: &subcommand-passthrough-vars
+      SUBCOMMAND: '{{index .MATCH 0}}'
+    cmds:
+      - tofu {{.SUBCOMMAND}} {{.CLI_ARGS}}
+  ### END SECTION: Terraform shared utility tasks
 
+  ### BEGIN SECTION: Wrangler shared utility tasks
+  wrangler:*:
+    desc: Deploy a Wrangler worker project
+    preconditions: &necessary-wrangler-envs
+      - sh: 'npx wrangler whoami'
+        msg: "Wrangler MUST be logged in!"
+    vars: *subcommand-passthrough-vars
+    requires: &necessary-wrangler-vars
+      vars: [WRANGLER_PROJECT_DIR]
+    dir: '{{.WRANGLER_PROJECT_DIR}}'
+    cmds:
+      - npx wrangler {{.CLI_ARGS}}
+  ### END SECTION: Wrangler shared utility tasks
+
+  ### BEGIN SECTION: Terraform modules for eearomatics.com
   ee:init:
     desc: Initialize the eearomatics.com Terraform module
     cmds:
       - task: tf:init
-        vars:
-          TF_PROJECT_DIR: infrastructure/eearomatics
-  ee:plan:
-    desc: Plan the eearomatics.com Terraform module
-    cmds:
-      - task: tf:plan
-        vars:
-          TF_PROJECT_DIR: infrastructure/eearomatics
-  ee:apply:
-    desc: Apply the eearomatics.com Terraform module
-    cmds:
-      - task: tf:apply
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
   ee:clean:
@@ -77,29 +72,20 @@ tasks:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
-  ee:run:
+  ee:*:
     desc: Run a command in the eearomatics.com Terraform module
+    vars: *subcommand-passthrough-vars
     cmds:
-      - task: tf:run
+      - task: tf:{{.SUBCOMMAND}}
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
+  ### END SECTION: Terraform modules for eearomatics.com
 
+  ### BEGIN SECTION: Terraform modules for torinreine.com
   tr:init:
     desc: Initialize the torinreine.com Terraform module
     cmds:
       - task: tf:init
-        vars:
-          TF_PROJECT_DIR: infrastructure/torinreine
-  tr:plan:
-    desc: Plan the torinreine.com Terraform module
-    cmds:
-      - task: tf:plan
-        vars:
-          TF_PROJECT_DIR: infrastructure/torinreine
-  tr:apply:
-    desc: Apply the torinreine.com Terraform module
-    cmds:
-      - task: tf:apply
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
   tr:clean:
@@ -108,29 +94,47 @@ tasks:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
-  tr:run:
+  tr:*:
     desc: Run a command in the torinreine.com Terraform module
+    vars: *subcommand-passthrough-vars
     cmds:
-      - task: tf:run
+      - task: tf:{{.SUBCOMMAND}}
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
+  ### END SECTION: Terraform modules for torinreine.com
 
+  ### BEGIN SECTION: Container-registry workers and Terraform module
+  cr:tf:init:
+    desc: Initialize the container-registry Terraform module
+    cmds:
+      - task: tf:init
+        vars:
+          TF_PROJECT_DIR: infrastructure/container-registry
+  cr:deploy:
+    desc: "Deploy the container-registry worker"
+    cmds:
+      
+      - task: tf:apply
+  cr:tf:clean:
+    desc: Clean the container-registry Terraform module
+    cmds:
+      - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/container-registry
+  cr:tf:*:
+    desc: Run a command in the container-registry Terraform module
+    vars: *subcommand-passthrough-vars
+    cmds:
+      - task: tf:{{.SUBCOMMAND}}
+        vars:
+          TF_PROJECT_DIR: infrastructure/container-registry
+  ### END SECTION: Container-registry workers and Terraform module
+
+  ### BEGIN SECTION: Shared cloud resources Terraform module
   cloud:init:
     desc: Initialize the cloud Terraform module
     cmds:
       - task: tf:init
-        vars:
-          TF_PROJECT_DIR: infrastructure/cloud
-  cloud:plan:
-    desc: Plan the cloud Terraform module
-    cmds:
-      - task: tf:plan
-        vars:
-          TF_PROJECT_DIR: infrastructure/cloud
-  cloud:apply:
-    desc: Apply the cloud Terraform module
-    cmds:
-      - task: tf:apply
         vars:
           TF_PROJECT_DIR: infrastructure/cloud
   cloud:clean:
@@ -139,15 +143,41 @@ tasks:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/cloud
-  cloud:run:
+  cloud:*:
     desc: Run a command in the cloud Terraform module
+    vars: *subcommand-passthrough-vars
     cmds:
-      - task: tf:run
+      - task: tf:{{.SUBCOMMAND}}
         vars:
           TF_PROJECT_DIR: infrastructure/cloud
+  ### END SECTION: Shared cloud resources Terraform module
 
+  ### BEGIN SECTION: Infisical Terraform module
+  infisical:init:
+    desc: Initialize the infisical Terraform module
+    cmds:
+      - task: tf:init
+        vars:
+          TF_PROJECT_DIR: infrastructure/infisical
+  infisical:clean:
+    desc: Clean the infisical Terraform module
+    cmds:
+      - task: tf:clean
+        vars:
+          TF_PROJECT_DIR: infrastructure/infisical
+  infisical:*:
+    desc: Run a command in the infisical Terraform module
+    vars: *subcommand-passthrough-vars
+    cmds:
+      - task: tf:{{.SUBCOMMAND}}
+        vars:
+          TF_PROJECT_DIR: infrastructure/infisical
+  ### END SECTION: Infisical Terraform module
+
+  ### BEGIN SECTION: create-cloudflare utilities
   cf:create:
     desc: Run the create-cloudflare CLI
     cmds:
       - yarn install --frozen-lockfile
       - "{{.ROOT_DIR}}/node_modules/.bin/create-cloudflare {{.CLI_ARGS}}"
+  ### END SECTION: create-cloudflare utilities

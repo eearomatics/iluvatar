@@ -21,3 +21,26 @@ jobs:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
       - run: nix-shell --run "task ${{ matrix.project }}:init"
       - run: nix-shell --run "task ${{ matrix.project }}:plan"
+  test-cf-r2-registry:
+    name: Cloudflare R2 Registry Unit Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./workers/container-registry
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install yarn
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install --frozen-lockfile
+      - run: cp wrangler.toml.example wrangler.toml
+      - run: yarn run typecheck
+      - run: yarn test

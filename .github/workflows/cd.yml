@@ -12,6 +12,8 @@ jobs:
           - ee
           - tr
           - cloud
+          - container-registry
+          - infisical
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:

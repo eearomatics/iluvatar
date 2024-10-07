@@ -1,0 +1,38 @@
+{
+  "name": "@eearomatics/cf-r2-registry",
+  "version": "1.0.0",
+  "description": "An open-source Cloudflare R2 registry",
+  "main": "index.ts",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev:miniflare": "cross-env NODE_ENV=development wrangler --env dev dev --port 9999 --live-reload",
+    "typecheck": "tsc",
+    "test": "vitest --config test/vitest.config.ts run"
+  },
+  "dependencies": {
+    "@cfworker/base64url": "^1.12.5",
+    "@tsndr/cloudflare-worker-jwt": "^2.5.1",
+    "itty-router": "^4.0.27",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.5.7",
+    "@cloudflare/workers-types": "^4.20240614.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "miniflare": "3.20240909.4",
+    "typescript": "^5.3.3",
+    "vitest": "^2.1.0",
+    "wrangler": "^3.78.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "pnpm": {
+    "overrides": {
+      "@types/node": "18.15.3"
+    }
+  }
+}
