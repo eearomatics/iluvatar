@@ -21,8 +21,8 @@ jobs:
       - run: echo -n "$SOPS_GPG_KEY_B64E" | base64 -d | gpg --import
         env:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
-      - run: nix-shell --run "task ${{ matrix.project }}:init"
-      - run: nix-shell --run "task ${{ matrix.project }}:plan"
+      - run: nix-shell --run "task ${{ matrix.project }}:tf:init"
+      - run: nix-shell --run "task ${{ matrix.project }}:tf:plan"
   test-cf-r2-registry:
     name: Cloudflare R2 Registry Unit Tests
     runs-on: ubuntu-latest

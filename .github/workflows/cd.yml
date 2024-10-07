@@ -5,24 +5,37 @@ on:
     types:
       - completed
 jobs:
-  terraform:
+  deployments:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
-        project:
-          - ee
-          - tr
-          - cloud
-          - registry
-          - infisical
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        config:
+          - name: infisical
+            tf: true
+          - name: registry
+            tf: true
+            wrangler: true
+            needs: [infisical]
+          - name: ee
+            tf: true
+          - name: tr
+            tf: true
+          - name: cloud
+            tf: true
     runs-on: ubuntu-latest
-    steps:
+    needs: ${{ matrix.config.needs || null }}
+    steps: &deploy-steps
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v9
       - uses: DeterminateSystems/magic-nix-cache-action@v2
       - run: echo -n "$SOPS_GPG_KEY_B64E" | base64 -d | gpg --import
         env:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
-      - run: nix-shell --run "task ${{ matrix.project }}:init"
-      - run: nix-shell --run "task ${{ matrix.project }}:plan"
-      - run: nix-shell --run "task ${{ matrix.project }}:apply -- -auto-approve"
+      - run: nix-shell --run "task ${{ matrix.config }}:tf:init"
+        if: ${{ matrix.config.tf }}
+      - run: nix-shell --run "task ${{ matrix.config }}:tf:plan"
+        if: ${{ matrix.config.tf }}
+      - run: nix-shell --run "task ${{ matrix.config }}:wrangler:deploy"
+        if: ${{ matrix.config.wrangler }}
+      - run: nix-shell --run "task ${{ matrix.config }}:tf:apply -- -auto-approve"
+        if: ${{ matrix.config.tf }}

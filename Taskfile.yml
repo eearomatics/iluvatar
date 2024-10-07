@@ -64,19 +64,19 @@ tasks:
   ### END SECTION: Wrangler shared utility tasks
 
   ### BEGIN SECTION: Terraform modules for eearomatics.com
-  ee:init:
+  ee:tf:init:
     desc: Initialize the eearomatics.com Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
-  ee:clean:
+  ee:tf:clean:
     desc: Clean the eearomatics.com Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/eearomatics
-  ee:*:
+  ee:tf:*:
     desc: Run a command in the eearomatics.com Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
@@ -86,19 +86,19 @@ tasks:
   ### END SECTION: Terraform modules for eearomatics.com
 
   ### BEGIN SECTION: Terraform modules for torinreine.com
-  tr:init:
+  tr:tf:init:
     desc: Initialize the torinreine.com Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
-  tr:clean:
+  tr:tf:clean:
     desc: Clean the torinreine.com Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/torinreine
-  tr:*:
+  tr:tf:*:
     desc: Run a command in the torinreine.com Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
@@ -108,26 +108,26 @@ tasks:
   ### END SECTION: Terraform modules for torinreine.com
 
   ### BEGIN SECTION: Container-registry workers and Terraform module
-  registry:deploy:
+  registry:wrangler:deploy:
     desc: "Deploy the container-registry worker"
     cmds:
       - task: wrangler:deploy
         vars:
           WRANGLER_PROJECT_DIR: workers/container-registry
           CLI_ARGS: --env production
-  registry:init:
+  registry:tf:init:
     desc: Initialize the container-registry Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: workers/container-registry/iac
-  registry:clean:
+  registry:tf:clean:
     desc: Clean the container-registry Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: workers/container-registry/iac
-  registry:*:
+  registry:tf:*:
     desc: Run a command in the container-registry Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
@@ -137,19 +137,19 @@ tasks:
   ### END SECTION: Container-registry workers and Terraform module
 
   ### BEGIN SECTION: Shared cloud resources Terraform module
-  cloud:init:
+  cloud:tf:init:
     desc: Initialize the cloud Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: infrastructure/cloud
-  cloud:clean:
+  cloud:tf:clean:
     desc: Clean the cloud Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/cloud
-  cloud:*:
+  cloud:tf:*:
     desc: Run a command in the cloud Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
@@ -159,19 +159,19 @@ tasks:
   ### END SECTION: Shared cloud resources Terraform module
 
   ### BEGIN SECTION: Infisical Terraform module
-  infisical:init:
+  infisical:tf:init:
     desc: Initialize the infisical Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: infrastructure/infisical
-  infisical:clean:
+  infisical:tf:clean:
     desc: Clean the infisical Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: infrastructure/infisical
-  infisical:*:
+  infisical:tf:*:
     desc: Run a command in the infisical Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
