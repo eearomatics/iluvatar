@@ -108,26 +108,26 @@ tasks:
   ### END SECTION: Terraform modules for torinreine.com
 
   ### BEGIN SECTION: Container-registry workers and Terraform module
-  registry:worker:deploy:
+  registry:deploy:
     desc: "Deploy the container-registry worker"
     cmds:
       - task: wrangler:deploy
         vars:
           WRANGLER_PROJECT_DIR: workers/container-registry
           CLI_ARGS: --env production
-  registry:tf:init:
+  registry:init:
     desc: Initialize the container-registry Terraform module
     cmds:
       - task: tf:init
         vars:
           TF_PROJECT_DIR: workers/container-registry/iac
-  registry:tf:clean:
+  registry:clean:
     desc: Clean the container-registry Terraform module
     cmds:
       - task: tf:clean
         vars:
           TF_PROJECT_DIR: workers/container-registry/iac
-  registry:tf:*:
+  registry:*:
     desc: Run a command in the container-registry Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
