@@ -7,22 +7,30 @@ jobs:
   terraform:
     strategy:
       matrix:
-        project:
-          - ee
-          - tr
-          - cloud
-          - registry
-          - infisical
+        config:
+          - name: infisical
+            tf: true
+          - name: registry
+            tf: true
+            wrangler: true
+          - name: ee
+            tf: true
+          - name: tr
+            tf: true
+          - name: cloud
+            tf: true
     runs-on: ubuntu-latest
-    steps:
+    steps: &deploy-steps
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v9
       - uses: DeterminateSystems/magic-nix-cache-action@v2
       - run: echo -n "$SOPS_GPG_KEY_B64E" | base64 -d | gpg --import
         env:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
-      - run: nix-shell --run "task ${{ matrix.project }}:tf:init"
-      - run: nix-shell --run "task ${{ matrix.project }}:tf:plan"
+      - run: nix-shell --run "task ${{ matrix.config.name }}:tf:init"
+        if: ${{ matrix.config.tf }}
+      - run: nix-shell --run "task ${{ matrix.config.name }}:tf:plan"
+        if: ${{ matrix.config.tf }}
   test-cf-r2-registry:
     name: Cloudflare R2 Registry Unit Tests
     runs-on: ubuntu-latest

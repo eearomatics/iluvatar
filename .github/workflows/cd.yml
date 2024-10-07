@@ -29,11 +29,11 @@ jobs:
       - run: echo -n "$SOPS_GPG_KEY_B64E" | base64 -d | gpg --import
         env:
           SOPS_GPG_KEY_B64E: ${{ secrets.SOPS_GPG_KEY_B64E }}
-      - run: nix-shell --run "task ${{ matrix.config }}:tf:init"
+      - run: nix-shell --run "task ${{ matrix.config.name }}:tf:init"
         if: ${{ matrix.config.tf }}
-      - run: nix-shell --run "task ${{ matrix.config }}:tf:plan"
+      - run: nix-shell --run "task ${{ matrix.config.name }}:tf:plan"
         if: ${{ matrix.config.tf }}
-      - run: nix-shell --run "task ${{ matrix.config }}:wrangler:deploy"
+      - run: nix-shell --run "task ${{ matrix.config.name }}:wrangler:deploy"
         if: ${{ matrix.config.wrangler }}
-      - run: nix-shell --run "task ${{ matrix.config }}:tf:apply -- -auto-approve"
+      - run: nix-shell --run "task ${{ matrix.config.name }}:tf:apply -- -auto-approve"
         if: ${{ matrix.config.tf }}
