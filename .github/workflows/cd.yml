@@ -15,7 +15,6 @@ jobs:
           - name: registry
             tf: true
             wrangler: true
-            needs: [infisical]
           - name: ee
             tf: true
           - name: tr
@@ -23,7 +22,6 @@ jobs:
           - name: cloud
             tf: true
     runs-on: ubuntu-latest
-    needs: ${{ matrix.config.needs || null }}
     steps: &deploy-steps
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v9
