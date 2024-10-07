@@ -4,7 +4,7 @@ locals {
 }
 
 data "toml_file" "wrangler_toml" {
-  input = file("${path.module}/../../workers/container-registry/wrangler.toml")
+  input = file("${path.module}/../wrangler.toml")
 }
 
 data "infisical_projects" "eearomatics" {

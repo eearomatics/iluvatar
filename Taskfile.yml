@@ -46,6 +46,10 @@ tasks:
   ### END SECTION: Terraform shared utility tasks
 
   ### BEGIN SECTION: Wrangler shared utility tasks
+  wrangler:login:
+    desc: Log in to the Wrangler CLI
+    cmds:
+      - npx wrangler login
   wrangler:*:
     desc: Deploy a Wrangler worker project
     preconditions: &necessary-wrangler-envs
@@ -56,7 +60,7 @@ tasks:
       vars: [WRANGLER_PROJECT_DIR]
     dir: '{{.WRANGLER_PROJECT_DIR}}'
     cmds:
-      - npx wrangler {{.CLI_ARGS}}
+      - npx wrangler {{.SUBCOMMAND}} {{.CLI_ARGS}}
   ### END SECTION: Wrangler shared utility tasks
 
   ### BEGIN SECTION: Terraform modules for eearomatics.com
@@ -104,30 +108,32 @@ tasks:
   ### END SECTION: Terraform modules for torinreine.com
 
   ### BEGIN SECTION: Container-registry workers and Terraform module
-  cr:tf:init:
+  registry:worker:deploy:
+    desc: "Deploy the container-registry worker"
+    cmds:
+      - task: wrangler:deploy
+        vars:
+          WRANGLER_PROJECT_DIR: workers/container-registry
+          CLI_ARGS: --env production
+  registry:tf:init:
     desc: Initialize the container-registry Terraform module
     cmds:
       - task: tf:init
         vars:
-          TF_PROJECT_DIR: infrastructure/container-registry
-  cr:deploy:
-    desc: "Deploy the container-registry worker"
-    cmds:
-      
-      - task: tf:apply
-  cr:tf:clean:
+          TF_PROJECT_DIR: workers/container-registry/iac
+  registry:tf:clean:
     desc: Clean the container-registry Terraform module
     cmds:
       - task: tf:clean
         vars:
-          TF_PROJECT_DIR: infrastructure/container-registry
-  cr:tf:*:
+          TF_PROJECT_DIR: workers/container-registry/iac
+  registry:tf:*:
     desc: Run a command in the container-registry Terraform module
     vars: *subcommand-passthrough-vars
     cmds:
       - task: tf:{{.SUBCOMMAND}}
         vars:
-          TF_PROJECT_DIR: infrastructure/container-registry
+          TF_PROJECT_DIR: workers/container-registry/iac
   ### END SECTION: Container-registry workers and Terraform module
 
   ### BEGIN SECTION: Shared cloud resources Terraform module
