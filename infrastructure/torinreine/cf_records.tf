@@ -95,3 +95,21 @@ resource "cloudflare_record" "zoho_mail_dkim" {
   zone_id = data.cloudflare_zone.torin_reine.id
 }
 
+resource "cloudflare_record" "zoho_forms_mail_dkim" {
+  comment = "Zoho Forms Email DKIM Verification"
+  name    = "1422741997._domainkey"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqgNYvujffxkBpWKFh2Pog61jbg1mQDUIIUuXYoHwDcSvthmYvfppcF5/X12OeNKJ3jw9/7qsTFO2f9GNKJZQ2TxkAuszO5n01/15DdzIu5RfRlvgaIml+SfY1ZLr5aJL0opM4znweLPAPcTywT3qoOjoiHxq96VlUrfRm6ivPKgSawjN/fwzmP9w7WcFWj1RYtfvZI7gvYY064j95Ji90bgUHzWGypFYwxSCymV6tdRXvwuQKbWu7KBZ8nf+OAmmz1EB2tMHH2dPU6yAeARfQbZ+++8R/2+FjwBknlAP37qUB7FUeK7Qom4dErWE3h3cyEE8cwSWOJpalHzSAWa61QIDAQAB"
+  zone_id = data.cloudflare_zone.torin_reine.id
+}
+
+resource "cloudflare_record" "zoho_forms_cname" {
+  name    = "forms"
+  content = "forms.cs.zohohost.com"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  zone_id = data.cloudflare_zone.torin_reine.id
+}

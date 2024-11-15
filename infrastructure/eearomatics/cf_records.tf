@@ -53,6 +53,16 @@ resource "cloudflare_record" "zoho_bookings_cname" {
   zone_id = data.cloudflare_zone.eearomatics.id
 }
 
+resource "cloudflare_record" "zoho_bookings_txt_verification" {
+  comment = "Zoho Bookings for EE Aromatics domain verification"
+  name    = "eearomatics.com"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "j75ojhy.bookings.cs.zohohost.com"
+  zone_id = data.cloudflare_zone.eearomatics.id
+}
+
 resource "cloudflare_record" "zoho_sites_cname" {
   name    = "dks6yc501"
   proxied = false
@@ -191,17 +201,6 @@ resource "cloudflare_record" "facebook_verification" {
   ttl     = 1
   type    = "TXT"
   content = "facebook-domain-verification=5go2l4ua44qa7evnmwd27s6xhqmg92"
-  zone_id = data.cloudflare_zone.eearomatics.id
-}
-
-resource "cloudflare_record" "zoho_bookings_verification" {
-  comment = "Zoho Bookings for EE Aromatics"
-  name    = "eearomatics.com"
-  proxied = false
-  tags    = ["bookings", "zoho"]
-  ttl     = 1
-  type    = "TXT"
-  content = "hagjq5e.bookings.cs.zohohost.com"
   zone_id = data.cloudflare_zone.eearomatics.id
 }
 
