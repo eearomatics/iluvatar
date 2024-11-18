@@ -106,6 +106,7 @@ resource "cloudflare_record" "zoho_forms_mail_dkim" {
 }
 
 resource "cloudflare_record" "zoho_forms_cname" {
+  comment = "CNAME entry to allow URLs under forms.torinreine.com to host Zoho Forms content"
   name    = "forms"
   content = "forms.cs.zohohost.com"
   proxied = false
