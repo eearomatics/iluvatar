@@ -237,3 +237,23 @@ resource "cloudflare_record" "zoho_mail_dkim" {
   zone_id = data.cloudflare_zone.eearomatics.id
 }
 
+
+resource "cloudflare_record" "zoho_forms_mail_dkim" {
+  comment = "Zoho Forms Email DKIM Verification"
+  name    = "1719351276._domainkey"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjjeCEoofiGNjJxvYPhX1UlYqOLSCULRNYVZZGPgBU93HMD5JrFjkdu4ts0bZsUb4/M5sRd6piSHOv0tn7Bh95F4rA2gu51Dou++b/WYHG0Yjz/0Pv1EhB6rlrGB5QSyaQy0MzwILsEG6lnsCOevQ4ZACILH9DVSnbJ0JQWhNdJTMVPCza+0DvutkpuGJkFBauiR3vc82ERpxk2ZAbPtoLrzNBa7DpDYIT8hki4ujvqKHekVfJ4L5psaEEsk05tzaWhg1DPDRoNaGW9CS3n5wLC34ahhhdTrwXDfNghjoXYtApI7HwRFKv2l5DQbdF0tl07Iiap7d8Tg8QSFczisYoQIDAQAB"
+  zone_id = data.cloudflare_zone.eearomatics.id
+}
+
+resource "cloudflare_record" "zoho_forms_cname" {
+  comment = "CNAME entry to allow URLs under forms.eearomatics.com to host Zoho Forms content"
+  name    = "forms"
+  content = "forms.cs.zohohost.com"
+  proxied = false
+  ttl     = 1
+  type    = "CNAME"
+  zone_id = data.cloudflare_zone.eearomatics.id
+}
