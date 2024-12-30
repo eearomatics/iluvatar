@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="Google.en-US-Wavenet-F">
+    Hello! Thank you for calling Ethereal Elegance Aromatics! We will now connect your call to the next available representative. Please hold while we reach them.
+  </Say>
+  <Dial>
+    <Number>+17348124565</Number>
+    <Number>+12484958891</Number>
+  </Dial>
+</Response>
